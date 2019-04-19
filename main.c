@@ -1,16 +1,14 @@
 #include "main.h"
 
 int main(int argc, char **argv){
-	if (argc != 5)
+	if (argc != 4)
 	{
 		fprintf(stderr, "Wrong arguments\n");
 		return EXIT_FAILURE;
 	}
 	// check radius and epsilon values -  read readme for the validity of argument
 	char *Rad = argv[3];
-	char *Eps = argv[4];
 	int radius = atoi(Rad); 
-	int epsilon = atoi(Eps);
 
 	// open the BMP file
 	BMPImage *bmpImage = BMP_Open(argv[1]);
@@ -30,7 +28,7 @@ int main(int argc, char **argv){
 		return EXIT_FAILURE;
 	}
 	// call adaptive threshold function
-	BMPImage *adaptive = AdaptiveThresholding(grayImage, radius, epsilon);
+	BMPImage *adaptive = AdaptiveThresholding(grayImage, radius);
 
 	if (adaptive == NULL)
 	{

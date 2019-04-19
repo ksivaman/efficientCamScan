@@ -4,4 +4,4 @@
 
 int RGB2Gray(unsigned char red, unsigned char green, unsigned char blue);
 BMPImage * ImgToGray(BMPImage * image);
-BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius, int epsilon);
+BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius);

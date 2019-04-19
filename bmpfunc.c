@@ -43,7 +43,7 @@ BMPImage * ImgToGray(BMPImage * image){
 	return gray_image;
 }
 
-BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius, int epsilon){
+BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius){
 	// allocate space for the image
 	BMPImage * adaptive = (BMPImage *)malloc(sizeof(BMPImage));
 	if (adaptive == NULL) {
@@ -85,7 +85,7 @@ BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius, int epsilon){
 				}              
 			}
 			average = sum / count;
-			if (average - epsilon > grayImage->data[(height*(grayImage->header).width+width)*3])
+			if (average > grayImage->data[(height*(grayImage->header).width+width)*3])
 			{
 				adaptive->data[(height*(grayImage->header).width+width)*3]=0;
 				adaptive->data[(height*(grayImage->header).width+width)*3+1]=0;

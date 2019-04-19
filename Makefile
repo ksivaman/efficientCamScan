@@ -23,16 +23,16 @@ val: scan
 testall: test1 test2 test3 test4
 
 test1: scan
-	./scan exampleImages/RV2.bmp outputImages/outputRV2.bmp 3 2
+	./scan exampleImages/RV2.bmp outputImages/outputRV2.bmp 3
 
 test2: scan
-	./scan exampleImages/RV.bmp outputImages/outputRV.bmp 5 2
+	./scan exampleImages/RV.bmp outputImages/outputRV.bmp 5
 
 test3: scan
-	./scan exampleImages/RV2Small.bmp outputImages/outputRV2Small.bmp 11 2   
+	./scan exampleImages/RV2Small.bmp outputImages/outputRV2Small.bmp 11
 
 test4: scan
-	./scan exampleImages/CondProb.bmp outputImages/outputCondProb.bmp 1 2
+	./scan exampleImages/CondProb.bmp outputImages/outputCondProb.bmp 1
 
 clean: # remove all machine generated files
 	rm -f $(OBJS) $(TARGET)
