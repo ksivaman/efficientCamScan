@@ -1,0 +1,73 @@
+==21493== Memcheck, a memory error detector
+==21493== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==21493== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==21493== Command: ./scan exampleImages/RV2.bmp outputImages/expectedRV2.bmp 3
+==21493== Parent PID: 21492
+==21493== 
+--21493-- 
+--21493-- Valgrind options:
+--21493--    --tool=memcheck
+--21493--    --verbose
+--21493--    --leak-check=full
+--21493--    --log-file=valgrind.log
+--21493-- Contents of /proc/version:
+--21493--   Linux version 2.6.32-754.11.1.el6.x86_64 (mockbuild@x86-031.build.eng.bos.redhat.com) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-23) (GCC) ) #1 SMP Tue Jan 22 17:25:23 EST 2019
+--21493-- Arch and hwcaps: AMD64, amd64-sse3-cx16
+--21493-- Page sizes: currently 4096, max supported 4096
+--21493-- Valgrind library directory: /usr/lib64/valgrind
+--21493-- Reading syms from /home/shay/a/ksivaman/ECE264/imgthreads/efficientCamScan/scan
+--21493-- Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux
+--21493--    object doesn't have a dynamic symbol table
+--21493-- Reading syms from /lib64/ld-2.12.so
+--21493--   Considering /usr/lib/debug/.build-id/97/af4b77212f74cff72b6c013e6aa2d74a97ef60.debug ..
+--21493--   .. build-id is valid
+--21493-- Scheduler: using generic scheduler lock implementation.
+--21493-- Reading suppressions file: /usr/lib64/valgrind/default.supp
+==21493== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-21493-by-ksivaman-on-ecegrid-thin1.ecn.purdue.edu
+==21493== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-21493-by-ksivaman-on-ecegrid-thin1.ecn.purdue.edu
+==21493== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-21493-by-ksivaman-on-ecegrid-thin1.ecn.purdue.edu
+==21493== 
+==21493== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==21493== don't want to do, unless you know exactly what you're doing,
+==21493== or are doing some strange experiment):
+==21493==   /usr/lib64/valgrind/../../bin/vgdb --pid=21493 ...command...
+==21493== 
+==21493== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==21493==   /path/to/gdb ./scan
+==21493== and then give GDB the following command
+==21493==   target remote | /usr/lib64/valgrind/../../bin/vgdb --pid=21493
+==21493== --pid is optional if only one valgrind process is running
+==21493== 
+--21493-- REDIR: 0x3d29e17f90 (strlen) redirected to 0x38049551 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--21493-- Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so
+--21493-- Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so
+--21493-- REDIR: 0x3d29e17da0 (index) redirected to 0x4a07c30 (index)
+--21493-- REDIR: 0x3d29e17e20 (strcmp) redirected to 0x4a08570 (strcmp)
+--21493-- Reading syms from /lib64/libpthread-2.12.so
+--21493--   Considering /usr/lib/debug/.build-id/4e/a475cd3fd3b69b6c95d9381fa74b36db4992ef.debug ..
+--21493--   .. build-id is valid
+--21493-- Reading syms from /lib64/libc-2.12.so
+--21493--   Considering /usr/lib/debug/.build-id/a5/f93642576869a169bacf9771c674e0cb91fcbb.debug ..
+--21493--   .. build-id is valid
+--21493-- REDIR: 0x3d2a284d80 (strcasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--21493-- REDIR: 0x3d2a287040 (strncasecmp) redirected to 0x480155c (_vgnU_ifunc_wrapper)
+--21493-- REDIR: 0x3d2a281210 (__GI_strlen) redirected to 0x4a07fb0 (__GI_strlen)
+--21493-- REDIR: 0x3d2a282cf0 (__GI_strrchr) redirected to 0x4a07ab0 (__GI_strrchr)
+--21493-- REDIR: 0x3d2a27aac0 (malloc) redirected to 0x4a069ac (malloc)
+--21493-- REDIR: 0x3d2a289720 (memcpy) redirected to 0x4a08b60 (memcpy)
+--21493-- REDIR: 0x3d2a2845b0 (mempcpy) redirected to 0x4a0a020 (mempcpy)
+--21493-- REDIR: 0x3d2a27b920 (free) redirected to 0x4a063a9 (free)
+--21493-- REDIR: 0x3d2a28aba0 (strchrnul) redirected to 0x4a09fb0 (strchrnul)
+==21493== 
+==21493== HEAP SUMMARY:
+==21493==     in use at exit: 0 bytes in 0 blocks
+==21493==   total heap usage: 266 allocs, 266 frees, 35,803,434 bytes allocated
+==21493== 
+==21493== All heap blocks were freed -- no leaks are possible
+==21493== 
+==21493== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 8 from 6)
+--21493-- 
+--21493-- used_suppression:      4 U1004-ARM-_dl_relocate_object
+--21493-- used_suppression:      4 glibc-2.5.x-on-SUSE-10.2-(PPC)-2a
+==21493== 
+==21493== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 8 from 6)

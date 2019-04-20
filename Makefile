@@ -3,19 +3,19 @@
 TARGET = scan
 WARNING = -Wall -Wshadow --pedantic
 ERROR = -Wvla -Werror
-GCC = gcc -std=c99 -g $(WARNING) $(ERROR) 
+GCC = gcc -pthread -std=c99 -g $(WARNING) $(ERROR)
 
-SRCS = main.c utils.c bmpfunc.c
+SRCS = main.c utils.c bmpfunc.c histogram.c
 
 OBJS = $(SRCS:%.c=%.o)
 
-VALGRIND = valgrind --tool=memcheck --verbose --leak-check=full --log-file=valgrind.log ./scan exampleImages/RV2.bmp expectedImages/expectedRV2.bmp 3 2
+VALGRIND = valgrind --tool=memcheck --verbose --leak-check=full --log-file=valgrind.log ./scan exampleImages/RV2.bmp outputImages/expectedRV2.bmp 3
 
 $(TARGET): $(OBJS) 
 	$(GCC) $(OBJS) -o $(TARGET)
 
 .c.o: 
-	$(GCC) $(TESTFALGS) -c $*.c 
+	$(GCC) -c $*.c 
 
 val: scan 
 	$(VALGRIND)

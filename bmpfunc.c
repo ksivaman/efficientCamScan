@@ -1,6 +1,7 @@
-#include "bmpfunc.h"
+#include "utils.h"
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
+#define BINS 256
 
 int RGB2Gray(unsigned char red, unsigned char green, unsigned char blue){
 	// this is a commonly used formula --https://en.wikipedia.org/wiki/Grayscale#Converting_color_to_grayscale
@@ -53,52 +54,38 @@ BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius){
 	}
 
 	adaptive->header = grayImage->header;
+	adaptive->data = malloc(sizeof(unsigned char)*(adaptive->header).imagesize);
 
-	if ((adaptive->data = malloc(sizeof(unsigned char)*(adaptive->header).imagesize)) == NULL) {
+	if (adaptive->data == NULL) 
+	{
 		fprintf(stderr, "Error allocating memory\n");
 		free(adaptive);
 		return NULL;
 	}
 
-	int height = 0;
-	int width = 0;
+	//copying data
+	memcpy((adaptive->data), (grayImage->data), sizeof(unsigned char)*(adaptive->header).imagesize);
 
-	for (height = 0; height < (grayImage->header).height; height++)
-	{
-		for (width = 0; width < (grayImage->header).width; width++)
-		{
-			int toprow = MAX(0, height-radius);
-			int bottomrow = MIN((grayImage->header).height-1, height+radius);
-			int leftcol = MAX(0, width-radius);
-			int rightcol = MIN((grayImage->header).width-1, width+radius);
-			int i = 0;
-			int count = 0;
-			int average = 0;
-			int j = 0;
-			int sum = 0; 
-			for (i = toprow; i<=bottomrow; i++)
-			{
-				for (j = leftcol; j<=rightcol; j++)
-				{
-					sum += grayImage->data[(i*(grayImage->header).width+j)*3];
-					count++; 
-				}              
-			}
-			average = sum / count;
-			if (average > grayImage->data[(height*(grayImage->header).width+width)*3])
-			{
-				adaptive->data[(height*(grayImage->header).width+width)*3]=0;
-				adaptive->data[(height*(grayImage->header).width+width)*3+1]=0;
-				adaptive->data[(height*(grayImage->header).width+width)*3+2]=0;      
-			}
-			else
-			{
-				adaptive->data[(height*(grayImage->header).width+width)*3]=255;
-				adaptive->data[(height*(grayImage->header).width+width)*3+1]=255;
-				adaptive->data[(height*(grayImage->header).width+width)*3+2]=255;   
-			}
-		}
-	}
+	int max_width = (grayImage->header).width;
+
+	int *kernel_hist = malloc(sizeof(int) * BINS);
+
+	for (int v=0; v<BINS; v++)
+		kernel_hist[v] = 0;
+
+	kernel_hist = initializeHist(radius, adaptive, kernel_hist);
+	int** col_hists = allocate_mem(BINS, max_width);
+
+	// int median = calcMedian(kernel_hist, radius);
+	// printf("median is %d\n", median);
+
+	
+
+	for(int l=0; l<BINS; l++)
+		free(col_hists[l]);
+
+	free(col_hists);
+	free(kernel_hist);
 
 	return adaptive;        
 }

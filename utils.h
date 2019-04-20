@@ -1,6 +1,9 @@
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdint.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+#include<string.h>
+#include<pthread.h>
 
 #define BMP_HEADER_SIZE 54
 #define DIB_HEADER_SIZE 40
@@ -40,3 +43,12 @@ BMPImage *BMP_Open(const char *filename);
 int Is_BMPHeader_Valid(BMPHeader *bmp_hdr, FILE *fptr);
 int BMP_Write(const char * outfile, BMPImage *image);
 void BMP_Free(BMPImage *image);
+
+int RGB2Gray(unsigned char red, unsigned char green, unsigned char blue);
+BMPImage * ImgToGray(BMPImage * image);
+BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius);
+
+void deallocate_mem(int*** arr, int n);
+int** allocate_mem(int bins, int width);
+int* initializeHist(int radius, BMPImage* adaptive, int* kernel_hist);
+int calcMedian(int* kernel_hist, int radius);
