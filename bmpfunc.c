@@ -1,7 +1,4 @@
 #include "utils.h"
-#define MIN(a,b) (((a)<(b))?(a):(b))
-#define MAX(a,b) (((a)>(b))?(a):(b))
-#define BINS 256
 
 int RGB2Gray(unsigned char red, unsigned char green, unsigned char blue){
 	// this is a commonly used formula --https://en.wikipedia.org/wiki/Grayscale#Converting_color_to_grayscale
@@ -67,19 +64,34 @@ BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius){
 	memcpy((adaptive->data), (grayImage->data), sizeof(unsigned char)*(adaptive->header).imagesize);
 
 	int max_width = (grayImage->header).width;
+	int max_height = (grayImage->header).height;
 
 	int *kernel_hist = malloc(sizeof(int) * BINS);
 
 	for (int v=0; v<BINS; v++)
 		kernel_hist[v] = 0;
 
-	kernel_hist = initializeHist(radius, adaptive, kernel_hist);
+	kernel_hist = initializeHist(radius, grayImage, kernel_hist);
 	int** col_hists = allocate_mem(BINS, max_width);
+	col_hists = initializeColHist(grayImage, radius, max_width, col_hists);
 
-	// int median = calcMedian(kernel_hist, radius);
-	// printf("median is %d\n", median);
+	for(int i = radius; i <= max_height - radius - 1; i++)
+	{
+		for(int j = radius; j < max_width - radius - 1; j++)
+		{
+			int median = calcMedian(kernel_hist, radius);
+			adaptive->data[(i*max_width+j)*3] = median;
+			adaptive->data[(i*max_width+j)*3 + 1] = median;
+			adaptive->data[(i*max_width+j)*3 + 2] = median;
 
-	
+			kernel_hist = updateKernelRow(kernel_hist, col_hists, i, j, radius);
+		}
+		if (i != (max_height - radius - 1))
+		{
+			col_hists = updateColBox(grayImage, col_hists, i, radius, max_width);
+			kernel_hist = updateKernelCol(grayImage, kernel_hist, i, radius);
+		}
+	}
 
 	for(int l=0; l<BINS; l++)
 		free(col_hists[l]);

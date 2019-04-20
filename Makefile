@@ -9,7 +9,7 @@ SRCS = main.c utils.c bmpfunc.c histogram.c
 
 OBJS = $(SRCS:%.c=%.o)
 
-VALGRIND = valgrind --tool=memcheck --verbose --leak-check=full --log-file=valgrind.log ./scan exampleImages/RV2.bmp outputImages/expectedRV2.bmp 3
+VALGRIND = valgrind --tool=memcheck --verbose --leak-check=full --log-file=valgrind.log ./scan exampleImages/RV2Small.bmp outputImages/outputRV2Small.bmp 3
 
 $(TARGET): $(OBJS) 
 	$(GCC) $(OBJS) -o $(TARGET)
@@ -29,7 +29,7 @@ test2: scan
 	./scan exampleImages/RV.bmp outputImages/outputRV.bmp 5
 
 test3: scan
-	./scan exampleImages/RV2Small.bmp outputImages/outputRV2Small.bmp 11
+	./scan exampleImages/RV2Small.bmp outputImages/outputRV2Small.bmp 3
 
 test4: scan
 	./scan exampleImages/CondProb.bmp outputImages/outputCondProb.bmp 1

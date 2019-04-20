@@ -11,6 +11,10 @@
 #define TRUE 1
 #define FALSE 0
 
+#define MIN(a,b) (((a)<(b))?(a):(b))
+#define MAX(a,b) (((a)>(b))?(a):(b))
+#define BINS 256
+
 // tell compiler not to add space between the attributes
 #pragma pack(1)
 
@@ -52,3 +56,8 @@ void deallocate_mem(int*** arr, int n);
 int** allocate_mem(int bins, int width);
 int* initializeHist(int radius, BMPImage* adaptive, int* kernel_hist);
 int calcMedian(int* kernel_hist, int radius);
+int** initializeColHist(BMPImage* grayImage, int radius, int max_width, int** chist);
+
+int* updateKernelRow(int* kernel_hist, int** col_hists, int i, int j, int radius);
+int** updateColBox(BMPImage* gray, int** col_hists, int i, int radius, int max_width);
+int* updateKernelCol(BMPImage* gray, int* kernel_hist, int i, int radius);
