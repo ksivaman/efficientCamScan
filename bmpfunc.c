@@ -75,6 +75,8 @@ BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius){
 	int** col_hists = allocate_mem(BINS, max_width);
 	col_hists = initializeColHist(grayImage, radius, max_width, col_hists);
 
+	BMPWrite("grayscale/outputRV2Small.bmp", adaptive);
+
 	for(int i = radius; i <= max_height - radius - 1; i++)
 	{
 		for(int j = radius; j < max_width - radius - 1; j++)
