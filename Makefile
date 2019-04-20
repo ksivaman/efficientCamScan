@@ -29,7 +29,7 @@ test2: scan
 	./scan exampleImages/RV.bmp outputImages/outputRV.bmp 5
 
 test3: scan
-	./scan exampleImages/RV2Small.bmp outputImages/outputRV2Small.bmp 3
+	./scan exampleImages/RV2Small.bmp outputImages/outputRV2Small.bmp 11
 
 test4: scan
 	./scan exampleImages/CondProb.bmp outputImages/outputCondProb.bmp 1
