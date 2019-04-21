@@ -50,7 +50,6 @@ int* initializeHist(int radius, BMPImage* gray, int* kernel_hist, int top)
 		for(int col = 0; col < 2*radius+1; col++)
 		{
 			int index = gray->data[(row*max_width + col)*3];
-            //printf("%d\n", index);
 			kernel_hist[index] += 1;
 		}
 	}

@@ -1,5 +1,6 @@
 #include "utils.h"
 
+//check for a valid header
 int Is_BMPHeader_Valid(BMPHeader* header, FILE *fptr) {
 	if (header -> type != 0x4D42)
 	{
