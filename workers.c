@@ -4,7 +4,7 @@ void *shiftKernel(void* args)
 {
     HistInfo* hi = (HistInfo*) args;
     BMPImage* gray = hi->gray;
-    BMPImage* adaptive = hi->adaptive;
+    //BMPImage* adaptive = hi->adaptive;
 
     int *kernel_hist = malloc(sizeof(int) * BINS);
 
@@ -17,9 +17,9 @@ void *shiftKernel(void* args)
     for(int j = hi->radius; j < (hi->max_width) - (hi->radius) - 1; j++)
     {
         int median = calcMedian(kernel_hist, hi->radius);
-        adaptive->data[(i*(hi->max_width)+j)*3] = median;
-        adaptive->data[(i*(hi->max_width)+j)*3 + 1] = median;
-        adaptive->data[(i*(hi->max_width)+j)*3 + 2] = median;
+        (hi->adaptive)->data[(i*(hi->max_width)+j)*3] = median;
+        (hi->adaptive)->data[(i*(hi->max_width)+j)*3 + 1] = median;
+        (hi->adaptive)->data[(i*(hi->max_width)+j)*3 + 2] = median;
 
         kernel_hist = updateKernelRow(kernel_hist, col_hists, i, j, hi->radius);
     }

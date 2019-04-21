@@ -42,14 +42,14 @@ int** allocate_mem(int bins, int width)
 
 int* initializeHist(int radius, BMPImage* gray, int* kernel_hist, int top)
 {
-	//int max_width = (gray->header).width;
+	int max_width = (gray->header).width;
 
     //initialize the histogram
 	for (int row = 0 + top; row < 2*radius+1 + top; row++)
 	{
 		for(int col = 0; col < 2*radius+1; col++)
 		{
-			int index = 0;//gray->data[(row*max_width + col)*3];
+			int index = gray->data[(row*max_width + col)*3];
             //printf("%d\n", index);
 			kernel_hist[index] += 1;
 		}
