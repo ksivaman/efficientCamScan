@@ -47,9 +47,9 @@ typedef struct {
 typedef struct {
 	BMPImage* adaptive;
 	BMPImage* gray;
-	int** col_hist;
 	int radius;
 	int mid_height;
+	int max_width;
 } HistInfo;
 
 BMPImage *BMP_Open(const char *filename);
@@ -63,9 +63,9 @@ BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius);
 
 void deallocate_mem(int*** arr, int n);
 int** allocate_mem(int bins, int width);
-int* initializeHist(int radius, BMPImage* adaptive, int* kernel_hist);
+int* initializeHist(int radius, BMPImage* adaptive, int* kernel_hist, int top);
 int calcMedian(int* kernel_hist, int radius);
-int** initializeColHist(BMPImage* grayImage, int radius, int max_width, int** chist);
+int** initializeColHist(BMPImage* grayImage, int radius, int max_width, int** chist, int top);
 
 int* updateKernelRow(int* kernel_hist, int** col_hists, int i, int j, int radius);
 int** updateColBox(BMPImage* gray, int** col_hists, int i, int radius, int max_width);

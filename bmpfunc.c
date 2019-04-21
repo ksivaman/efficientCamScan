@@ -74,16 +74,16 @@ BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius)
 		kernel_hist[v] = 0;
 	}
 
-	kernel_hist = initializeHist(radius, grayImage, kernel_hist);
+	kernel_hist = initializeHist(radius, grayImage, kernel_hist, 0);
 	int** col_hists = allocate_mem(BINS, max_width);
-	col_hists = initializeColHist(grayImage, radius, max_width, col_hists);
+	col_hists = initializeColHist(grayImage, radius, max_width, col_hists, 0);
 
 	HistInfo * hi = malloc(sizeof(HistInfo));
 	hi->gray = grayImage;
 	hi->adaptive = adaptive;
-	hi->col_hist = col_hists;
 	hi->radius = radius;
 	hi->mid_height = 0;
+	hi->max_width = max_width;
 
 	pthread_t t[MAX_THREADS];
 	for(int thr = 0; thr < max_height - 2*radius - 1; thr++)

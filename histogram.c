@@ -1,8 +1,8 @@
 #include"utils.h"
 
-int** initializeColHist(BMPImage* grayImage, int radius, int max_width, int** chist)
+int** initializeColHist(BMPImage* grayImage, int radius, int max_width, int** chist, int top)
 {
-    for (int i = 0; i < 2*radius+1; i++)
+    for (int i = 0 + top; i < 2*radius+1 + top; i++)
     {
         for (int j = 0; j < max_width; j++)
         {
@@ -40,12 +40,12 @@ int** allocate_mem(int bins, int width)
     return arr;
 } 
 
-int* initializeHist(int radius, BMPImage* gray, int* kernel_hist)
+int* initializeHist(int radius, BMPImage* gray, int* kernel_hist, int top)
 {
 	int max_width = (gray->header).width;
 
     //initialize the histogram
-	for (int row = 0; row < 2*radius+1; row++)
+	for (int row = 0 + top; row < 2*radius+1 + top; row++)
 	{
 		for(int col = 0; col < 2*radius+1; col++)
 		{
