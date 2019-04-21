@@ -105,5 +105,8 @@ BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius)
 	free(col_hists);
 	free(kernel_hist);
 
-	return hi->adaptive;        
+	BMPImage* final = hi->adaptive;
+	free(hi);
+
+	return final;        
 }
