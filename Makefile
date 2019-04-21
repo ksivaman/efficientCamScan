@@ -3,7 +3,7 @@
 TARGET = scan
 WARNING = -Wall -Wshadow --pedantic
 ERROR = -Wvla -Werror
-OPTIM = -ftree-vectorize -O3
+OPTIM = -ftree-vectorize -O3 -O0
 GCC = gcc $(OPTIM) -pthread -std=c99 -g $(WARNING) $(ERROR)
 
 SRCS = main.c utils.c bmpfunc.c histogram.c workers.c

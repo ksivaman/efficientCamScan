@@ -86,13 +86,15 @@ BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius)
 	hi->max_width = max_width;
 
 	pthread_t t[MAX_THREADS];
-	for(int thr = 0; thr < max_height - 2*radius - 1; thr++)
+	int limit = max_height - 2*radius - 1;
+
+	for(int thr = 0; thr < limit; thr++)
 	{
+		hi->mid_height = thr;
 		pthread_create(&t[thr], NULL, shiftKernel, hi);
-		hi->mid_height += 1;
 	}
 
-	for(int thr = 0; thr < max_height - 2*radius - 1; thr++)
+	for(int thr = 0; thr < limit; thr++)
 	{
 		pthread_join(t[thr], NULL);
 	}
@@ -103,5 +105,5 @@ BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius)
 	free(col_hists);
 	free(kernel_hist);
 
-	return adaptive;        
+	return hi->adaptive;        
 }
