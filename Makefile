@@ -3,9 +3,10 @@
 TARGET = scan
 WARNING = -Wall -Wshadow --pedantic
 ERROR = -Wvla -Werror
-GCC = gcc -pthread -std=c99 -g $(WARNING) $(ERROR)
+OPTIM = -ftree-vectorize -O3
+GCC = gcc $(OPTIM) -pthread -std=c99 -g $(WARNING) $(ERROR)
 
-SRCS = main.c utils.c bmpfunc.c histogram.c
+SRCS = main.c utils.c bmpfunc.c histogram.c workers.c
 
 OBJS = $(SRCS:%.c=%.o)
 
@@ -29,7 +30,7 @@ test2: scan
 	./scan exampleImages/RV.bmp outputImages/outputRV.bmp 5
 
 test3: scan
-	./scan exampleImages/RV2Small.bmp outputImages/outputRV2Small.bmp 11
+	./scan exampleImages/RV2Small.bmp outputImages/outputRV2Small.bmp 3
 
 test4: scan
 	./scan exampleImages/CondProb.bmp outputImages/outputCondProb.bmp 1

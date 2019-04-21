@@ -10,12 +10,13 @@
 
 #define TRUE 1
 #define FALSE 0
+#define BINS 256
+#define MAX_THREADS 3000
 
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
-#define BINS 256
 
-// tell compiler not to add space between the attributes
+// not to add spaces b/w attributes --for mem access
 #pragma pack(1)
 
 // A BMP file has a header (54 bytes) and data
@@ -43,6 +44,14 @@ typedef struct {
 	unsigned char * data;
 } BMPImage;
 
+typedef struct {
+	BMPImage* adaptive;
+	BMPImage* gray;
+	int** col_hist;
+	int radius;
+	int mid_height;
+} HistInfo;
+
 BMPImage *BMP_Open(const char *filename);
 int Is_BMPHeader_Valid(BMPHeader *bmp_hdr, FILE *fptr);
 int BMP_Write(const char * outfile, BMPImage *image);
@@ -61,3 +70,5 @@ int** initializeColHist(BMPImage* grayImage, int radius, int max_width, int** ch
 int* updateKernelRow(int* kernel_hist, int** col_hists, int i, int j, int radius);
 int** updateColBox(BMPImage* gray, int** col_hists, int i, int radius, int max_width);
 int* updateKernelCol(BMPImage* gray, int* kernel_hist, int i, int radius);
+
+void* shiftKernel(void* args);

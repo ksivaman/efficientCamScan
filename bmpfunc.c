@@ -41,7 +41,8 @@ BMPImage * ImgToGray(BMPImage * image){
 	return gray_image;
 }
 
-BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius){
+BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius)
+{
 	// allocate space for the image
 	BMPImage * adaptive = (BMPImage *)malloc(sizeof(BMPImage));
 	if (adaptive == NULL) {
@@ -64,35 +65,36 @@ BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius){
 	memcpy((adaptive->data), (grayImage->data), sizeof(unsigned char)*(adaptive->header).imagesize);
 
 	int max_width = (grayImage->header).width;
-	int max_height = (grayImage->header).height;
+	int max_height = (grayImage->header).height;	
 
 	int *kernel_hist = malloc(sizeof(int) * BINS);
 
 	for (int v=0; v<BINS; v++)
+	{
 		kernel_hist[v] = 0;
+	}
 
 	kernel_hist = initializeHist(radius, grayImage, kernel_hist);
 	int** col_hists = allocate_mem(BINS, max_width);
 	col_hists = initializeColHist(grayImage, radius, max_width, col_hists);
 
-	BMP_Write("grayscale/outputRV2Small.bmp", adaptive);
+	HistInfo * hi = malloc(sizeof(HistInfo));
+	hi->gray = grayImage;
+	hi->adaptive = adaptive;
+	hi->col_hist = col_hists;
+	hi->radius = radius;
+	hi->mid_height = 0;
 
-	for(int i = radius; i <= max_height - radius - 1; i++)
+	pthread_t t[MAX_THREADS];
+	for(int thr = 0; thr < max_height - 2*radius - 1; thr++)
 	{
-		for(int j = radius; j < max_width - radius - 1; j++)
-		{
-			int median = calcMedian(kernel_hist, radius);
-			adaptive->data[(i*max_width+j)*3] = median;
-			adaptive->data[(i*max_width+j)*3 + 1] = median;
-			adaptive->data[(i*max_width+j)*3 + 2] = median;
+		pthread_create(&t[thr], NULL, shiftKernel, hi);
+		hi->mid_height += 1;
+	}
 
-			kernel_hist = updateKernelRow(kernel_hist, col_hists, i, j, radius);
-		}
-		if (i != (max_height - radius - 1))
-		{
-			col_hists = updateColBox(grayImage, col_hists, i, radius, max_width);
-			kernel_hist = updateKernelCol(grayImage, kernel_hist, i, radius);
-		}
+	for(int thr = 0; thr < max_height - 2*radius - 1; thr++)
+	{
+		pthread_join(t[thr], NULL);
 	}
 
 	for(int l=0; l<BINS; l++)
